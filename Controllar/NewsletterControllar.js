@@ -4,8 +4,8 @@ const createRecord = async (req, res) => {
     try {
         let { email } = req.body
         if (!email) {
-            return res.status(200).json({
-                success: true,
+            return res.status(401).json({
+                success: false,
                 mess: "Fill all fiels"
             })
         }
