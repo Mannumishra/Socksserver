@@ -4,9 +4,8 @@ const fs = require("fs")
 
 const createProduct = async (req, res) => {
     try {
-        console.log(req.body);
-        const { name, category, sizes, description, tag, productdetails, subcategory } = req.body;
-        const data = new Product({ name, category, sizes, description, tag, productdetails, subcategory })
+        const { name, category, sizes, description, tag, productdetails, subcategory ,stock } = req.body;
+        const data = new Product({ name, category, sizes, description, tag, productdetails, subcategory ,stock })
         if (req.files.pic1) {
             const url = await uploadCloundanary(req.files.pic1[0].path)
             data.pic1 = url

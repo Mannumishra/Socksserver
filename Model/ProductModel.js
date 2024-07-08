@@ -45,7 +45,7 @@ const ProductSchema = mongoose.Schema({
         required: [true, "Tag is true"]
     },
     stock: {
-        type: Number,
+        type: String,
         default: 0
     },
     pic1: {

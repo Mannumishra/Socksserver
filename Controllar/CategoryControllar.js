@@ -70,6 +70,7 @@ const updateCategory = async (req, res) => {
     try {
         let data = await category.findOne({ _id: req.params._id })
         if (data) {
+            console.log(req.body.name)
             data.name = req.body.name ?? data.name
             if (req.file) {
                 const imgurl = await uploadCloundanary(req.file.path)

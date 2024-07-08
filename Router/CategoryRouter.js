@@ -8,6 +8,6 @@ categoryRouter.post("/category", upload.single("categoryimage"), createCategory)
 categoryRouter.get("/category", getCategory)
 categoryRouter.get("/category/:_id", getSingleCategory)
 categoryRouter.delete("/category/:_id", deleteCategory)
-categoryRouter.put("/category/:_id", updateCategory)
+categoryRouter.put("/category/:_id",upload.single("categoryimage") , updateCategory)
 
 module.exports = categoryRouter
