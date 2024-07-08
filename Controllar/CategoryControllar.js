@@ -1,5 +1,6 @@
 const { uploadCloundanary } = require("../Middleware/cloudnary")
 const category = require("../Model/CategoryModel")
+const fs = require("fs")
 
 const createCategory = async (req, res) => {
     try {
@@ -16,6 +17,9 @@ const createCategory = async (req, res) => {
         const imgurl = await uploadCloundanary(req.file.path)
         data.categoryimage = imgurl
         await data.save()
+        try {
+            fs.unlinkSync(req.file.path)
+        } catch (error) { }
         res.status(200).json({
             success: true,
             mess: "New Category created",
@@ -65,9 +69,17 @@ const getSingleCategory = async (req, res) => {
 const updateCategory = async (req, res) => {
     try {
         let data = await category.findOne({ _id: req.params._id })
-        if (data)
+        if (data) {
             data.name = req.body.name ?? data.name
+            if (req.file) {
+                const imgurl = await uploadCloundanary(req.file.path)
+                data.categoryimage = imgurl
+            }
+        }
         await data.save()
+        try {
+            fs.unlinkSync(req.file.path)
+        } catch (error) { }
         res.status(200).json({
             success: true,
             mess: "Category Found",
