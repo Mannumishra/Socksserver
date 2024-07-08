@@ -1,19 +1,6 @@
 const bestsellerRouter = require("express").Router()
-const multer = require("multer")
 const { createRecord, getRecord, updateRecord, deleteRecord, getSingleRecord } = require("../Controllar/BestSellerControllar")
-
-
-
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, './Public/BestSeller')
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + file.originalname)
-    }
-})
-
-const upload = multer({ storage: storage })
+const upload = require("../Middleware/multer")
 
 bestsellerRouter.post("/bestseller", upload.single("image"), createRecord)
 bestsellerRouter.get("/bestseller", getRecord)

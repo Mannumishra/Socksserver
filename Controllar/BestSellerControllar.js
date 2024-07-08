@@ -1,19 +1,6 @@
+const { uploadCloundanary } = require("../Middleware/cloudnary");
 const bestseller = require("../Model/BestSellerModel");
 const fs = require("fs")
-const cloudinary = require('cloudinary').v2
-cloudinary.config({
-    cloud_name: 'dglihfwse',
-    api_key: '939345957566958',
-    api_secret: 'q-Pg0dyWquxjatuRb62-PtFzkM0'
-});
-const uploadCloundanary = async (file) => {
-    try {
-        const uploadFile = await cloudinary.uploader.upload(file)
-        return uploadFile.secure_url
-    } catch (error) {
-        console.log(error)
-    }
-}
 
 const createRecord = async (req, res) => {
     try {
@@ -23,6 +10,9 @@ const createRecord = async (req, res) => {
             data.image = url
         }
         await data.save();
+        try {
+            fs.unlinkSync(req.file.path)
+        } catch (error) { }
         res.status(200).json({
             success: true,
             mess: "bestseller Record Created Successfully",
@@ -98,13 +88,13 @@ const updateRecord = async (req, res) => {
                 });
             }
             else if (req.file) {
-                try {
-                    fs.unlinkSync(data.image)
-                } catch (error) { }
                 const url = await uploadCloundanary(req.file.path)
                 data.image = url
             }
             await data.save()
+            try {
+                fs.unlinkSync(req.file.path)
+            } catch (error) { }
             res.status(200).json({
                 success: true,
                 mess: "bestseller Updated Successfully",
