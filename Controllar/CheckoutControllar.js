@@ -2,6 +2,7 @@ const Checkout = require("../Model/CheckoutModel");
 
 const placeOrder = async (req, res) => {
     try {
+        console.log(req.body)
         const { userid, subtotal, shipping, total, products, paymentmode } = req.body;
         const newCheckout = new Checkout({ userid, subtotal, shipping, total, paymentmode, products });
         await newCheckout.save();

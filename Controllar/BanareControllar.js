@@ -1,19 +1,7 @@
+const { uploadCloundanary } = require("../Middleware/cloudnary");
 const banare = require("../Model/BannerModel");
 const fs = require("fs")
-const cloudinary = require('cloudinary').v2
-cloudinary.config({
-    cloud_name: 'dglihfwse',
-    api_key: '939345957566958',
-    api_secret: 'q-Pg0dyWquxjatuRb62-PtFzkM0'
-});
-const uploadCloundanary = async (file) => {
-    try {
-        const uploadFile = await cloudinary.uploader.upload(file)
-        return uploadFile.secure_url
-    } catch (error) {
-        console.log(error)
-    }
-}
+
 const createRecord = async (req, res) => {
     try {
         if (!req.file) {
@@ -23,19 +11,21 @@ const createRecord = async (req, res) => {
             });
         }
         const data = new banare(req.file);
-        // console.log(req.file)
         if (req.file) {
             const url = await uploadCloundanary(req.file.path)
             data.image = url
         }
         await data.save();
+        try {
+            fs.unlinkSync(req.file.path)
+        } catch (error) {}
         res.status(200).json({
             success: true,
             mess: "Banare Uploaded Successfully",
             data: data
         });
     } catch (error) {
-        // console.log(error);
+        console.log(error);
         res.status(500).json({
             success: false,
             mess: "Internal Server Error"
@@ -104,13 +94,13 @@ const updateRecord = async (req, res) => {
                 });
             }
             else if (req.file) {
-                try {
-                    fs.unlinkSync(data.image)
-                } catch (error) { }
                 const url = await uploadCloundanary(req.file.path)
                 data.image = url
             }
             await data.save()
+            try {
+                fs.unlinkSync(req.file.path)
+            } catch (error) { }
             res.status(200).json({
                 success: true,
                 mess: "Banare Updated Successfully",
@@ -136,9 +126,6 @@ const deleteRecord = async (req, res) => {
     try {
         const data = await banare.findOne({ _id: req.params._id })
         if (data) {
-            try {
-                fs.unlinkSync(data.image)
-            } catch (error) { }
             await data.deleteOne()
             res.status(200).json({
                 success: true,

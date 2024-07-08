@@ -3,6 +3,7 @@ const contact = require("../Model/ContactModel")
 const createRecord = async (req, res) => {
     try {
         let { name, email, phone, message } = req.body
+        console.log(req.body)
         if (!name || !email || !phone || !message) {
             return res.status(400).json({
                 success: true,

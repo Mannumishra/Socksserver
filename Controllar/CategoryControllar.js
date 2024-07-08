@@ -1,16 +1,20 @@
+const { uploadCloundanary } = require("../Middleware/cloudnary")
 const category = require("../Model/CategoryModel")
 
 const createCategory = async (req, res) => {
     try {
         const { name } = req.body
-        if (!name) {
+        console.log(req.body)
+        console.log(req.file)
+        if (!name || req.file.length === 0) {
             return res.status(400).json({
                 success: false,
                 mess: "fields is must required"
             })
         }
-        console.log(req.body)
         let data = new category({ name })
+        const imgurl = await uploadCloundanary(req.file.path)
+        data.categoryimage = imgurl
         await data.save()
         res.status(200).json({
             success: true,
@@ -97,5 +101,5 @@ module.exports = {
     getCategory: getCategory,
     getSingleCategory: getSingleCategory,
     deleteCategory: deleteCategory,
-    updateCategory:updateCategory
+    updateCategory: updateCategory
 }

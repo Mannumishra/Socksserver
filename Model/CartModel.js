@@ -17,7 +17,7 @@ const cartSchema =new  mongoose.Schema({
         type: Number,
         required: [true, "Product is is must required"]
     },
-    size: {
+    pair: {
         type: String,
         required: [true, "Product is is must required"]
     },

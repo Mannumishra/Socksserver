@@ -33,15 +33,15 @@ schema
 const createRecord = async (req, res) => {
     try {
         console.log(req.body)
-        let { name, username, email, phone, password } = req.body
-        if (!name || !username || !email || !phone || !password) {
+        let { name,  email, phone, password } = req.body
+        if (!name ||  !email || !phone || !password) {
             return res.status(400).json({
                 success: false,
                 mess: "Please Fill AllRequired Fields"
             })
         }
         if (req.body.password && schema.validate(req.body.password)) {
-            let data = new user({ name, username, email, phone, password })
+            let data = new user({ name,  email, phone, password })
             bcrypt.hash(data.password, 12, async (error, hash) => {
                 if (error) {
                     return res.status(500).json({
@@ -85,13 +85,7 @@ const createRecord = async (req, res) => {
         }
     } catch (error) {
         // console.log(error);
-        if (error.keyValue.username) {
-            res.status(400).json({
-                success: false,
-                mess: "This Username is Aready Register With us "
-            })
-        }
-        else if (error.keyValue.phone) {
+        if (error.keyValue.phone) {
             res.status(400).json({
                 success: false,
                 mess: "This phone is Aready Register With us "
@@ -184,11 +178,12 @@ const updateRecord = async (req, res) => {
 }
 const login = async (req, res) => {
     try {
-        let data = await user.findOne({
-            $or: [
-                { username: req.body.username },
-                { email: req.body.email }
-            ]
+        console.log(req.body)
+        let data = await user.findOne({ email:req.body.email
+            // $or: [
+            //     { username: req.body.username },
+            //     { email: req.body.email }
+            // ]
         })
         if (data) {
             if (await bcrypt.compare(req.body.password, data.password)) {

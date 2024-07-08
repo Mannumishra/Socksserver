@@ -1,18 +1,6 @@
 const productRouter = require("express").Router()
 const { createProduct, getAllProducts, deleteProduct, getProductById, updateProduct } = require("../Controllar/ProductContollar")
-const multer = require("multer")
-
-
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, './Public/Product')
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + file.originalname)
-    }
-})
-
-const upload = multer({ storage: storage })
+const upload = require("../Middleware/multer")
 
 productRouter.post("/product", upload.fields([
     { name: "pic1", maxCount: 1 },

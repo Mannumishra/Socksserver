@@ -9,9 +9,13 @@ const ProductSchema = mongoose.Schema({
         type: String,
         required: [true, "Product Maincategory Must Required"]
     },
+    subcategory: {
+        type: String,
+        required: [true, "Product subcategory Must Required"]
+    },
     sizes: [
         {
-            size: {
+            pair: {
                 type: String,
                 required: [true, "Product Size Must Required"]
             },
@@ -26,11 +30,7 @@ const ProductSchema = mongoose.Schema({
             finalprice: {
                 type: Number,
                 required: [true, "Product Price Must Required"]
-            },
-            stock: {
-                type: Number,
-                default: 0
-            },
+            }
         }
     ],
     productdetails: {
@@ -43,6 +43,10 @@ const ProductSchema = mongoose.Schema({
     }, tag: {
         type: String,
         required: [true, "Tag is true"]
+    },
+    stock: {
+        type: Number,
+        default: 0
     },
     pic1: {
         type: String,
