@@ -9,9 +9,13 @@ const ProductSchema = mongoose.Schema({
         type: String,
         required: [true, "Product Maincategory Must Required"]
     },
-    subcategory: {
+    collectionname: {
         type: String,
         required: [true, "Product subcategory Must Required"]
+    },
+    numberoffoot:{
+        type:[String],
+        required:[true , "Number of foot is most important"]
     },
     sizes: [
         {

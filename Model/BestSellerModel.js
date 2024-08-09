@@ -5,7 +5,7 @@ const sellerSchema = new mongoose.Schema({
         type:String,
         required:[true,"Image Field is must Required"]
     },
-    productName:{
+    traindingName:{
         type:String,
         required:[true,"Image Field is must Required"]
     }

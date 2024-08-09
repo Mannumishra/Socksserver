@@ -4,8 +4,9 @@ const fs = require("fs")
 
 const createProduct = async (req, res) => {
     try {
-        const { name, category, sizes, description, tag, productdetails, subcategory ,stock } = req.body;
-        const data = new Product({ name, category, sizes, description, tag, productdetails, subcategory ,stock })
+        console.log(req.body)
+        const { name, category, sizes, description, tag, productdetails, collectionname, stock, numberoffoot } = req.body;
+        const data = new Product({ name, category, sizes, description, tag, productdetails, collectionname, stock, numberoffoot })
         if (req.files.pic1) {
             const url = await uploadCloundanary(req.files.pic1[0].path)
             data.pic1 = url
@@ -96,12 +97,13 @@ const updateProduct = async (req, res) => {
         if (data) {
             data.name = req.body.name ?? data.name
             data.category = req.body.category ?? data.category
-            data.subcategory = req.body.subcategory ?? data.subcategory
+            data.collectionname = req.body.collectionname ?? data.collectionname
             data.description = req.body.description ?? data.description
             data.productdetails = req.body.productdetails ?? data.productdetails
             data.tag = req.body.tag ?? data.tag
             data.sizes = req.body.sizes ?? data.sizes
             data.stock = req.body.stock ?? data.stock
+            data.numberoffoot = req.body.numberoffoot ?? data.numberoffoot
             if (req.files.pic1) {
                 const url = await uploadCloundanary(req.files.pic1[0].path)
                 data.pic1 = url

@@ -80,7 +80,7 @@ const updateRecord = async (req, res) => {
     try {
         const data = await bestseller.findOne({ _id: req.params._id })
         if (data) {
-            data.productName = req.body.productName ?? data.productName
+            data.traindingName = req.body.traindingName ?? data.traindingName
             if (!req.file) {
                 res.status(400).json({
                     success: false,
