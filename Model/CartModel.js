@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const cartSchema =new  mongoose.Schema({
+const cartSchema = new mongoose.Schema({
     userid: {
         type: String,
         required: true
@@ -18,6 +18,10 @@ const cartSchema =new  mongoose.Schema({
         required: [true, "Product is is must required"]
     },
     pair: {
+        type: String,
+        required: [true, "Product is is must required"]
+    },
+    numberoffoot: {
         type: String,
         required: [true, "Product is is must required"]
     },
