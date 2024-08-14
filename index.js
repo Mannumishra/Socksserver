@@ -25,6 +25,10 @@ app.use("/Public", express.static("Public"))
 
 app.use(cors())
 
+app.get("/" , (req,res)=>{
+    res.send("welcome to Gespunah !!!!")
+})
+
 app.use("/api", banareRouter)
 app.use("/api", bestsellerRouter)
 app.use("/api", testimonialRouter)
