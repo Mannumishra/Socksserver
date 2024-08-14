@@ -47,6 +47,10 @@ const CheckoutSchema = new  mongoose.Schema({
             type: Number,
             required: [true, "Product is is must required"]
         },
+        numberoffoot: {
+            type: String,
+            required: [true, "Product is is must required"]
+        },
         pic: {
             type: String,
             required: [true, "Product is is must required"]
